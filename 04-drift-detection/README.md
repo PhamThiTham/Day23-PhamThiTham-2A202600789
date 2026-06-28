@@ -21,7 +21,7 @@ Then open the HTML report and inspect:
 
 ## Cross-platform note
 
-This track is **runnable on Colab** if you don't want Docker (the only one in the lab without a Compose dependency). See `colab/04_evidently_drift_colab.ipynb`.
+This track is **runnable without Docker** (the only one with no Compose dependency): run `python3 scripts/drift_detect.py` locally, or on Colab via `!python drift_detect.py`. The core PSI/KL/KS report needs **no Evidently**. For the optional Evidently HTML report (rubric #17), use Python 3.12: `pip install -r ../requirements-evidently.txt` (it pins `numpy<2.1`, so use a separate venv).
 
 ## Submission checkpoint (15 pts)
 

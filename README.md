@@ -23,6 +23,8 @@ You will:
 
 ## Quick start
 
+> **Python 3.12 or 3.13** for host-side tools (`make drift/load/verify`). The optional Evidently HTML report needs Python 3.12 — see `04-drift-detection/`.
+
 ```bash
 git clone <your-fork> && cd Day23-Track2-Observability-Lab
 cp .env.example .env       # then edit SLACK_WEBHOOK_URL
@@ -44,7 +46,7 @@ make down                  # stop (preserves data)
 | `01-instrument-fastapi/`  | Metrics + traces + logs in app   | 30 min | `/metrics` exposes 6 metric families |
 | `02-prometheus-grafana/`  | Scrape, 3 dashboards, alerts     | 45 min | Slack receives fire+resolve |
 | `03-tracing-and-logs/`    | OTel Collector + Jaeger + Loki   | 30 min | end-to-end trace screenshot |
-| `04-drift-detection/`     | Evidently + PSI/KL/KS math       | 20 min | drift-summary.json |
+| `04-drift-detection/`     | PSI/KL/KS math (+opt. Evidently) | 20 min | drift-summary.json |
 | `05-integration/`         | Wire prior days 16-22            | 20 min | cross-day dashboard |
 | `BONUS-llm-native-obs/`   | Self-hosted Langfuse (optional)  | +30 min | LLM trace from LangChain |
 | `BONUS-ebpf-profiling/`   | Pyroscope (Linux/WSL only)       | +30 min | flame graph for app |
@@ -53,22 +55,28 @@ make down                  # stop (preserves data)
 
 ## Slide → Track mapping
 
+> Deck rebuilt 2026-06 to **15 sections** (infra deepdive). Mapping:
+
 | Deck section | Lab track |
 |---|---|
-| §1 Evolution                       | reading only |
-| §2 Three Pillars + RED/USE         | `01-instrument-fastapi/` |
-| §3 Prometheus + Cardinality        | `02-prometheus-grafana/prometheus/` |
-| §4 Grafana + Dashboards-as-Code    | `02-prometheus-grafana/grafana/` |
-| §5 SLO + Burn-Rate                  | `02-prometheus-grafana/prometheus/rules/slo-burn-rate.yml` |
-| §6 Tracing + OTel + Sampling        | `03-tracing-and-logs/` |
-| §7 Drift + LLM-native               | `04-drift-detection/` + `BONUS-llm-native-obs/` |
-| §8 Cost + Vendors                   | `02-prometheus-grafana/grafana/dashboards/cost-and-tokens.json` |
-| §9 Postmortems + Runbooks           | `submission/REFLECTION.md` (write your own) |
-| §10 Demo                            | `make demo` |
+| §1 Evolution · §2 Pillars + RED/USE     | reading · `01-instrument-fastapi/` |
+| §3 Prometheus + Cardinality              | `02-prometheus-grafana/prometheus/` |
+| §4 Metrics-at-Scale & TSDB               | reading (cardinality control in `prometheus/`) |
+| §5 Grafana + Dashboards-as-Code          | `02-prometheus-grafana/grafana/` |
+| §6 SLO + Burn-Rate                        | `02-prometheus-grafana/prometheus/rules/slo-burn-rate.yml` |
+| §7 Tracing + OTel + Sampling             | `03-tracing-and-logs/` |
+| §8 GPU & LLM-Serving Telemetry           | `05-integration/monitor-day20-llama-cpp.py` · `HARDWARE-GUIDE.md` |
+| §9 eBPF, Profiling & Observability 2.0   | `BONUS-ebpf-profiling/` |
+| §10 AI-Specific: Drift & Eval            | `04-drift-detection/` |
+| §11 Cost + FinOps + Vendors              | `02-prometheus-grafana/grafana/dashboards/cost-and-tokens.json` |
+| §12 Postmortems + On-Call                | `submission/REFLECTION.md` |
+| §13 Agent Observability                  | reading · `BONUS-llm-native-obs/` |
+| §14 Experimentation & Advanced Drift     | `04-drift-detection/` (advanced drift) |
+| §15 Demo + Lab + Summary                 | `make demo` |
 
 ## What's NOT in the lab (and why)
 
-- **Promtail / log shipping into Loki** — Loki is up but receives no logs by default. Add Promtail as homework or tail OTel filelog receiver. We didn't bake this in to keep the stack at 7 services and avoid Mac/Windows bind-mount fragility.
+- **Log shipping into Loki** — Loki is up but receives no logs by default. Add **Grafana Alloy** (OTel-native; Promtail is EOL since 2026-03) or the OTel Collector filelog receiver as homework. We kept the core stack at 7 services to avoid Mac/Windows bind-mount fragility.
 - **eBPF continuous profiling** — Linux-only kernel feature; lives in `BONUS-ebpf-profiling/` for those who can run it.
 - **Multi-tenant security** — anonymous Grafana viewer is `Viewer` role with no real auth. Lab-grade only.
 
@@ -92,7 +100,7 @@ Public GitHub URL + commits in `submission/screenshots/` and `submission/REFLECT
 ├── BONUS-CHALLENGE.md           ← creative bonus brief (tiếng Việt, ungraded)
 ├── BONUS-CHALLENGE-EN.md        ← creative bonus brief (English, ungraded)
 ├── .env.example
-├── pyproject.toml / requirements.txt
+├── requirements.txt / requirements-evidently.txt (optional)
 ├── 00-setup/                    ← pre-flight
 ├── 01-instrument-fastapi/       ← FastAPI + Prometheus + OTel + structlog
 ├── 02-prometheus-grafana/       ← scrape config + alert rules + 3 dashboards

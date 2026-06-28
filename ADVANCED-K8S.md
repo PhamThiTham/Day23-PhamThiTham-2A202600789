@@ -233,7 +233,7 @@ Thêm các thành phần "vô danh anh hùng" mà mỗi cluster production đề
       service: { pipelines: { metrics: { receivers: [otlp], exporters: [prometheusremotewrite] }, traces: { receivers: [otlp], exporters: [otlp/jaeger] } } }
   ```
 
-- **Loki** qua Helm chart `grafana/loki-stack` + Promtail DaemonSet để ship log từ mọi pod.
+- **Loki** qua Helm chart + **Grafana Alloy** DaemonSet (thay Promtail, EOL 2026-03) để ship log từ mọi pod.
 
 ### Level A5 — Real cloud cluster (target: +4–8 giờ, có chi phí ~$10–30)
 

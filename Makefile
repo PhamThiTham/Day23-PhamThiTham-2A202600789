@@ -19,6 +19,7 @@ help:
 
 setup: ## one-time install + .env scaffold
 	@test -f .env || cp .env.example .env
+	@python3 -m pip install -q -r requirements.txt || echo '  (pip: use a venv; see README Python 3.12/3.13 note)'
 	@bash 00-setup/pull-images.sh
 	@python3 00-setup/verify-docker.py
 

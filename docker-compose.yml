@@ -26,6 +26,9 @@ services:
     networks: [obs]
 
   prometheus:
+    # v2.55 = the deck-sanctioned pre-v3 migration waypoint (deck §4: "upgrade to
+    # v2.55 before v3; rollback only to v2.55"). To try Prometheus 3.x native
+    # histograms (GA v3.8) bump to prom/prometheus:v3.12.0 (rules below are 3.x-compatible).
     image: prom/prometheus:v2.55.0
     container_name: day23-prometheus
     ports:
