@@ -1,0 +1,8 @@
+{
+  "text": "[mock] llama3-mock replied to 'observability test...' with 24 tokens",
+  "model": "llama3-mock",
+  "input_tokens": 4,
+  "output_tokens": 24,
+  "trace_id": "edea0594734d9ff32788cf3906265340",
+  "quality_score": 0.725
+}

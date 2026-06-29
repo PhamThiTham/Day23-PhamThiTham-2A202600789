@@ -1,0 +1,7 @@
+[
+  {
+    "key": "gen_ai.request.model",
+    "type": "string",
+    "value": "llama3-mock"
+  }
+]

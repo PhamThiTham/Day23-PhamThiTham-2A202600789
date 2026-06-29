@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "canDelete": true,
+    "slug": "cost-and-tokens-day-23",
+    "url": "/d/day23-cost-tokens/cost-and-tokens-day-23",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2026-06-29T04:36:47Z",
+    "updated": "2026-06-29T04:36:47Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 1,
+    "folderUid": "ffqkcqcy7ehogd",
+    "folderTitle": "AICB Day 23",
+    "folderUrl": "/dashboards/f/ffqkcqcy7ehogd/aicb-day-23",
+    "provisioned": false,
+    "provisionedExternalId": "cost-and-tokens.json",
+    "annotationsPermissions": {
+      "dashboard": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      },
+      "organization": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      }
+    }
+  },
+  "dashboard": {
+    "id": 3,
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "targets": [
+          {
+            "expr": "sum by (direction) (rate(inference_tokens_total[1m]))",
+            "legendFormat": "{{direction}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Token Throughput (in / out)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 5
+                },
+                {
+                  "color": "red",
+                  "value": 20
+                }
+              ]
+            },
+            "unit": "currencyUSD"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 2,
+        "targets": [
+          {
+            "expr": "3600 * (sum(rate(inference_tokens_total{direction=\"input\"}[5m])) * 0.0000005 + sum(rate(inference_tokens_total{direction=\"output\"}[5m])) * 0.000002)",
+            "refId": "A"
+          }
+        ],
+        "title": "Estimated $/hr (input @ $0.5/M, output @ $2.0/M)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "max": 1,
+            "min": 0,
+            "unit": "short"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 8
+        },
+        "id": 3,
+        "targets": [
+          {
+            "expr": "avg by (model) (inference_quality_score)",
+            "legendFormat": "{{model}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Eval Quality Score by model",
+        "type": "timeseries"
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 39,
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "title": "Cost & Tokens (Day 23)",
+    "uid": "day23-cost-tokens",
+    "version": 1
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "canDelete": true,
+    "slug": "slo-burn-rate-day-23",
+    "url": "/d/day23-slo/slo-burn-rate-day-23",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2026-06-29T04:36:47Z",
+    "updated": "2026-06-29T04:36:47Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 1,
+    "folderUid": "ffqkcqcy7ehogd",
+    "folderTitle": "AICB Day 23",
+    "folderUrl": "/dashboards/f/ffqkcqcy7ehogd/aicb-day-23",
+    "provisioned": false,
+    "provisionedExternalId": "slo-burn-rate.json",
+    "annotationsPermissions": {
+      "dashboard": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      },
+      "organization": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      }
+    }
+  },
+  "dashboard": {
+    "id": 4,
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 25
+                },
+                {
+                  "color": "green",
+                  "value": 50
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "targets": [
+          {
+            "expr": "100 * (1 - (sum(increase(inference_requests_total{status=\"error\"}[30d])) / sum(increase(inference_requests_total[30d])) / 0.005))",
+            "refId": "A"
+          }
+        ],
+        "title": "Error Budget Remaining (%)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "thresholdsStyle": {
+                "mode": "line"
+              }
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 6
+                },
+                {
+                  "color": "red",
+                  "value": 14.4
+                }
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 16,
+          "x": 8,
+          "y": 0
+        },
+        "id": 2,
+        "targets": [
+          {
+            "expr": "inference:fail_ratio:rate5m  / 0.005",
+            "legendFormat": "5m  burn",
+            "refId": "A"
+          },
+          {
+            "expr": "inference:fail_ratio:rate30m / 0.005",
+            "legendFormat": "30m burn",
+            "refId": "B"
+          },
+          {
+            "expr": "inference:fail_ratio:rate1h  / 0.005",
+            "legendFormat": "1h  burn",
+            "refId": "C"
+          },
+          {
+            "expr": "inference:fail_ratio:rate6h  / 0.005",
+            "legendFormat": "6h  burn",
+            "refId": "D"
+          }
+        ],
+        "title": "Burn Rate (multiple windows)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 6
+        },
+        "id": 3,
+        "targets": [
+          {
+            "expr": "ALERTS{alertstate=\"firing\"}",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Active Alerts",
+        "type": "table"
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 39,
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "title": "SLO Burn Rate (Day 23)",
+    "uid": "day23-slo",
+    "version": 1
+  }
+}

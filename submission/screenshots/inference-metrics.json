@@ -1,0 +1,30 @@
+# HELP inference_requests_total Total inference requests
+inference_requests_total{model="llama3-mock",status="ok"} 939.0
+inference_requests_total{model="llama3-mock",status="error"} 1.0
+# HELP inference_requests_created Total inference requests
+inference_requests_created{model="llama3-mock",status="ok"} 1.782744879466155e+09
+inference_requests_created{model="llama3-mock",status="error"} 1.7827450327670817e+09
+# HELP inference_latency_seconds Inference end-to-end latency
+inference_latency_seconds_bucket{le="0.05",model="llama3-mock"} 0.0
+inference_latency_seconds_bucket{le="0.1",model="llama3-mock"} 193.0
+inference_latency_seconds_bucket{le="0.25",model="llama3-mock"} 905.0
+inference_latency_seconds_bucket{le="0.5",model="llama3-mock"} 939.0
+inference_latency_seconds_bucket{le="1.0",model="llama3-mock"} 939.0
+inference_latency_seconds_bucket{le="2.0",model="llama3-mock"} 939.0
+inference_latency_seconds_bucket{le="5.0",model="llama3-mock"} 939.0
+inference_latency_seconds_bucket{le="10.0",model="llama3-mock"} 939.0
+inference_latency_seconds_bucket{le="+Inf",model="llama3-mock"} 939.0
+inference_latency_seconds_count{model="llama3-mock"} 939.0
+inference_latency_seconds_sum{model="llama3-mock"} 162.10811902700152
+# HELP inference_latency_seconds_created Inference end-to-end latency
+inference_latency_seconds_created{model="llama3-mock"} 1.7827448794663308e+09
+# HELP inference_active_gauge In-flight inference requests
+inference_active_gauge 0.0
+# HELP inference_tokens_total Tokens processed (input/output)
+inference_tokens_total{direction="input",model="llama3-mock"} 6907.0
+inference_tokens_total{direction="output",model="llama3-mock"} 27445.0
+# HELP inference_tokens_created Tokens processed (input/output)
+inference_tokens_created{direction="input",model="llama3-mock"} 1.782744879466202e+09
+inference_tokens_created{direction="output",model="llama3-mock"} 1.7827448794662316e+09
+# HELP inference_quality_score Latest eval-as-metric quality score [0,1]
+inference_quality_score{model="llama3-mock"} 0.725
