@@ -19,7 +19,7 @@ route:
 receivers:
   - name: 'slack-default'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/TEST/TEST/TEST'
+      - api_url: 'https://hooks.slack.com/services/REPLACE/ME'
         channel: '#observability'
         send_resolved: true
         title: '{{ if eq .Status "firing" }}FIRE{{ else }}RESOLVED{{ end }} {{ .GroupLabels.alertname }}'
@@ -31,7 +31,7 @@ receivers:
 
   - name: 'slack-critical'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/TEST/TEST/TEST'
+      - api_url: 'https://hooks.slack.com/services/REPLACE/ME'
         channel: '#oncall'
         send_resolved: true
         title: 'CRITICAL: {{ .GroupLabels.alertname }}'
